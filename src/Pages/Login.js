@@ -8,7 +8,7 @@ const Login = () => {
   return (
     <div className="loginPage">
       <p> Sign In with Google to create Posts </p>
-      <button className="login-with-google-btn">Login</button>
+      <button className="login-with-google-btn" onClick={signInWithGoogle}>Login</button>
       <Link to="/">
         <button
           style={{
