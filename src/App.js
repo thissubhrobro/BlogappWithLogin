@@ -5,10 +5,11 @@ import CreatePost from "./Pages/CreatePost";
 import ErrorPage from "./Pages/ErrorPage";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
+
 const App = () => {
-  // const [isAuth, setIsAuth] = useState(false);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { isLoggedIn } = useSelector(({ auth }) => auth);
   console.log("isLoggedIn======>", isLoggedIn);
+
   return (
     <Router>
       <Routes>

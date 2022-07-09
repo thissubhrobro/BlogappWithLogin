@@ -12,7 +12,6 @@ const Login = () => {
     signInWithPopup(auth, provider).then((result) => {
       localStorage.setItem("idToken", true);
       dispatch(authActions.login());
-      // setIsAuth(true);
       console.log("The user has logged In");
       navigate("/");
     });
@@ -22,7 +21,10 @@ const Login = () => {
       <NavBar />
 
       <div className="loginPage">
-        <p> Sign In with Google to create Posts </p>
+        <p style={{ textAlign: "center" }}>
+          {" "}
+          Sign In with Google to create Posts{" "}
+        </p>
         <button className="login-with-google-btn" onClick={signInWithGoogle}>
           Login
         </button>

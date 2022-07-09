@@ -7,7 +7,7 @@ import { authActions } from "../store/authSlice";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { isLoggedIn } = useSelector(({ auth }) => auth);
   // console.log("isLoggedIn from navbar", isLoggedIn);
 
   const logOutHandler = () => {
@@ -22,20 +22,23 @@ const NavBar = () => {
     <>
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/createPost">CreatePost</Link>
         {!isLoggedIn ? (
           <Link to="/login">Login</Link>
         ) : (
-          <button
-            onClick={logOutHandler}
-            style={{
-              backgroundColor: "white",
-              color: "black",
-              fontSize: "18px",
-            }}
-          >
-            Logout
-          </button>
+          <>
+            <Link to="/createPost">CreatePost</Link>
+
+            <button
+              onClick={logOutHandler}
+              style={{
+                backgroundColor: "white",
+                color: "black",
+                fontSize: "18px",
+              }}
+            >
+              Logout
+            </button>
+          </>
         )}
       </nav>
     </>
