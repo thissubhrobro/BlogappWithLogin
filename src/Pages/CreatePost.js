@@ -1,7 +1,14 @@
+import NavBar from "./NavBar";
+
 const CreatePost = () => {
   return (
     <>
-      <h4>CreatePost</h4>
+      <NavBar />
+      <div className="createPostPage">
+        <div className="cpContainer">
+          <h1>Create A Post</h1>
+        </div>
+      </div>
     </>
   );
 };
