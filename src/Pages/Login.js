@@ -18,21 +18,6 @@ const Login = () => {
     });
   };
   return (
-<<<<<<< HEAD
-    <div className="loginPage">
-      <p> Sign In with Google to create Posts </p>
-      <button className="login-with-google-btn" onClick={signInWithGoogle}>Login</button>
-      <Link to="/">
-        <button
-          style={{
-            backgroundColor: "purple",
-            color: "white",
-            padding: "10px",
-            textAlign: "center",
-          }}
-        >
-          Back to Home
-=======
     <>
       <NavBar />
 
@@ -40,7 +25,6 @@ const Login = () => {
         <p> Sign In with Google to create Posts </p>
         <button className="login-with-google-btn" onClick={signInWithGoogle}>
           Login
->>>>>>> 3202b703d7a5f7dbeb45df3d1feb03064d60eda9
         </button>
       </div>
     </>
