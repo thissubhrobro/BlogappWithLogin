@@ -8,7 +8,6 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector(({ auth }) => auth);
-  // console.log("isLoggedIn from navbar", isLoggedIn);
 
   const logOutHandler = () => {
     signOut(auth).then(() => {
