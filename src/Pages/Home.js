@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 // getdocs is for getting the documents from the firebase collections
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import NavBar from "./NavBar";
-import { db } from "../Firebase/FirebaseConfig";
+import { auth, db } from "../Firebase/FirebaseConfig";
 
 const Home = () => {
+  const { isLoggedIn } = useSelector(({ auth }) => auth);
+
   // now we want to show the datas by fetching from the firebase collection
   const [postList, setPostList] = useState([]);
   const postCollectionRef = collection(db, "posts");
@@ -28,22 +31,44 @@ const Home = () => {
     getPostData();
   }, []);
 
+  const deletePostHandler = async (id) => {
+    // delete this post
+    // db.collection("posts").doc(id).delete();
+    // setPostList((post) => post.filter((doc) => doc.id !== id));
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+    getPostData();
+  };
   return (
     <>
       <NavBar />
       <div className="homePage">
-        Home
-        {postList.map(({ id, post, title }) => {
-          return (
-            <div className="post">
-              <div className="postHeader">
-                <div className="title">
-                  <h1>{title}</h1>
+        {postList.map(
+          ({ id, post, title, author: { name, id: authorId } }, i) => {
+            return (
+              <div className="post" key={i}>
+                <div className="postHeader">
+                  <div className="title">
+                    <h1>{title}</h1>
+                  </div>
+                  {isLoggedIn && authorId === auth.currentUser.uid && (
+                    <div className="deletePost">
+                      <button
+                        onClick={() => {
+                          deletePostHandler(id);
+                        }}
+                      >
+                        &#128465;
+                      </button>
+                    </div>
+                  )}
                 </div>
+                <div className="postTextContainer">{post}</div>
+                <h3>{name}</h3>
               </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
       </div>
     </>
   );
