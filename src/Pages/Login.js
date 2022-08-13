@@ -22,7 +22,6 @@ const Login = () => {
 
       <div className="loginPage">
         <p style={{ textAlign: "center" }}>
-          {" "}
           Sign In with Google to create Posts{" "}
         </p>
         <button className="login-with-google-btn" onClick={signInWithGoogle}>

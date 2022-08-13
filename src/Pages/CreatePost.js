@@ -17,14 +17,14 @@ const CreatePost = () => {
   const postCollectionRef = collection(db, "posts");
   // where to post (db),in /posts particularly the collection of datas will be stored
   const submitHandler = async () => {
+    const bodyData = { title, post };
+    console.log("submitted datas===>", bodyData);
     await addDoc(postCollectionRef, {
       title,
       post,
       author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
     });
     // mentions which collection we want to store the datas (here /posts)
-    const bodyData = { title, post };
-    console.log("submitted datas===>", bodyData);
     navigate("/");
   };
   useEffect(() => {
