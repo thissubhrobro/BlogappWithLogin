@@ -25,7 +25,7 @@ const NavBar = () => {
           <Link to="/login">Login</Link>
         ) : (
           <>
-            <Link to="/createPost">CreatePost</Link>
+            <Link to="/createPost">New Post</Link>
 
             <button
               onClick={logOutHandler}
@@ -33,6 +33,7 @@ const NavBar = () => {
                 backgroundColor: "white",
                 color: "black",
                 fontSize: "18px",
+                cursor: "pointer",
               }}
             >
               Logout

@@ -10,7 +10,7 @@ const Home = () => {
   const { isLoggedIn } = useSelector(({ auth }) => auth);
 
   // now we want to show the datas by fetching from the firebase collection
-  const [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState(null);
   const postCollectionRef = collection(db, "posts");
   // where to post (db),in /posts particularly the collection of datas will be stored
 
@@ -33,8 +33,6 @@ const Home = () => {
 
   const deletePostHandler = async (id) => {
     // delete this post
-    // db.collection("posts").doc(id).delete();
-    // setPostList((post) => post.filter((doc) => doc.id !== id));
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
     getPostData();
@@ -43,32 +41,36 @@ const Home = () => {
     <>
       <NavBar />
       <div className="homePage">
-        {postList.map(
-          ({ id, post, title, author: { name, id: authorId } }, i) => {
-            return (
-              <div className="post" key={i}>
-                <div className="postHeader">
-                  <div className="title">
-                    <h1>{title}</h1>
-                  </div>
-                  {isLoggedIn && authorId === auth.currentUser.uid && (
-                    <div className="deletePost">
-                      <button
-                        onClick={() => {
-                          deletePostHandler(id);
-                        }}
-                      >
-                        &#128465;
-                      </button>
+        {postList &&
+          postList.length > 0 &&
+          postList.map(
+            ({ id, post, title, author: { name, id: authorId } }, i) => {
+              return (
+                <div className="post" key={i}>
+                  <div className="postHeader">
+                    <div className="title">
+                      <h1>{title}</h1>
                     </div>
-                  )}
+                    {isLoggedIn && authorId === auth.currentUser.uid && (
+                      <div className="deletePost">
+                        <button
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            deletePostHandler(id);
+                          }}
+                        >
+                          &#128465;
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <div className="postTextContainer">{post}</div>
+                  <h3>Created by-{name}</h3>
                 </div>
-                <div className="postTextContainer">{post}</div>
-                <h3>{name}</h3>
-              </div>
-            );
-          }
-        )}
+              );
+            }
+          )}
+        {postList && postList.length === 0 && <>No Posts Found!</>}
       </div>
     </>
   );

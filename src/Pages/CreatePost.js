@@ -9,19 +9,20 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CreatePost = () => {
-  const [title, setTitle] = useState("");
-  const [post, setPost] = useState("");
+  const [details, setDetails] = useState({ title: "", post: "" });
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector(({ auth }) => auth);
 
   const postCollectionRef = collection(db, "posts");
   // where to post (db),in /posts particularly the collection of datas will be stored
   const submitHandler = async () => {
-    const bodyData = { title, post };
+    const pTitle = details.title;
+    const pDesc = details.post;
+    const bodyData = { pTitle, pDesc };
     console.log("submitted datas===>", bodyData);
     await addDoc(postCollectionRef, {
-      title,
-      post,
+      title: pTitle,
+      post: pDesc,
       author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
     });
     // mentions which collection we want to store the datas (here /posts)
@@ -38,21 +39,25 @@ const CreatePost = () => {
       <NavBar />
       <div className="createPostPage">
         <div className="cpContainer">
-          <h1>Create A Post</h1>
+          <h1>Create A New Post</h1>
           <div className="inputGp">
             <label>Title:</label>
             <input
-              placeholder="Title..."
+              placeholder="Please Enter Post Title..."
               type="text"
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) =>
+                setDetails((val) => ({ ...val, title: e.target.value }))
+              }
             />
           </div>
           <div className="inputGp">
             <label>Post:</label>
             <textarea
-              placeholder="Post Title..."
+              placeholder="Please Enter Post Description..."
               type="text"
-              onChange={(e) => setPost(e.target.value)}
+              onChange={(e) =>
+                setDetails((val) => ({ ...val, post: e.target.value }))
+              }
             />
           </div>
           <button type="submit" onClick={submitHandler}>
